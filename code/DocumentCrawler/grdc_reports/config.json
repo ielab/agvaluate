@@ -1,0 +1,22 @@
+{
+  "GET_REPORT_LIST": "https://grdcfinalreports.cerdi.edu.au/api/v1/report/list",
+  "GET_REPORT": "https://grdcfinalreports.cerdi.edu.au/api/v1/report/{}",
+  "GET_REPORT_STATUS": "https://grdcfinalreports.cerdi.edu.au/api/v1/report_status/{}",
+  "GET_REGION_LIST": "https://grdcfinalreports.cerdi.edu.au/api/v1/region/list",
+  "GET_REGION": "https://grdcfinalreports.cerdi.edu.au/api/v1/region/{}",
+  "GET_REPORT_ATTACHMENT": "https://grdcfinalreports.cerdi.edu.au/api/v1/report_attachment/{}",
+  "GET_REPORT_ATTACHMENT_CONTENT": "https://grdcfinalreports.cerdi.edu.au/api/v1/report_attachment_content/{}",
+  "GET_ISSUE_LIST": "https://grdcfinalreports.cerdi.edu.au/api/v1/issue/list",
+  "GET_THEME_LIST": "https://grdcfinalreports.cerdi.edu.au/api/v1/theme/list",
+  "GET_REPORT_CATEGORY": "https://grdcfinalreports.cerdi.edu.au/api/v1/report_category/{}",
+  "JSON_PATH": "reports/json/",
+  "ELSEVIER_API_KEY": [
+    "key_1",
+    "key_2"
+  ],
+  "WILEY_API_KEY": "key",
+  "SPRINGER_NATURE_USER_KEY": [
+    "key_1",
+    "key_2"
+  ]
+}
