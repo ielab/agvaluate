@@ -41,35 +41,38 @@ def get_dois(articles):
     return dois
 
 
-def get_result(issn, apiKey, start):
+def get_result(issn, apiKeys, start, current_key):
     try:
         response = requests.get(
-            f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+            f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
         print(
-            f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+            f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
     except:
+        current_key = loop_api_keys(current_key, apiKeys)
         print('Exception in Connection, 10 Seconds to Recover')
         time.sleep(10)
         response = requests.get(
-            f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+            f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
         print(
-            f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+            f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
     while response.status_code != 200:
         time.sleep(5)
+        current_key = loop_api_keys(current_key, apiKeys)
         try:
             response = requests.get(
-                f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+                f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
             print(
-                f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+                f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
         except:
+            current_key = loop_api_keys(current_key, apiKeys)
             print('Exception in Connection, 10 Seconds to Recover')
             time.sleep(10)
             response = requests.get(
-                f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+                f'http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
             print(
-                f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={apiKey}')
+                f'{response.status_code}: Get Entry -> http://api.springernature.com/meta/v2/json?q=issn:{issn}&p=100&s={start}&api_key={current_key}')
     content = json.loads(response.content)
-    return content
+    return content, current_key
 
 
 def get_full_text(article):
@@ -136,26 +139,29 @@ def get_full_text(article):
         return None
 
 
-def get_doi_info(doi, apiKey):
+def get_doi_info(doi, apiKeys, current_key):
     try:
-        doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
-        print(f'{doi_response.status_code}: Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
+        doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
+        print(f'{doi_response.status_code}: Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
     except:
+        current_key = loop_api_keys(current_key, apiKeys)
         print('Exception in Connection, 10 Seconds to Recover')
         time.sleep(10)
-        doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
-        print(f'{doi_response.status_code}: Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
+        doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
+        print(f'{doi_response.status_code}: Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
     while doi_response.status_code != 200:
         time.sleep(5)
+        current_key = loop_api_keys(current_key, apiKeys)
         try:
-            doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
-            print(f'{doi_response.status_code}: Re-Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
+            doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
+            print(f'{doi_response.status_code}: Re-Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
         except:
+            current_key = loop_api_keys(current_key, apiKeys)
             print('Exception in Connection, 10 Seconds to Recover')
             time.sleep(10)
-            doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
-            print(f'{doi_response.status_code}: Re-Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={apiKey}')
-    return json.loads(doi_response.content)
+            doi_response = requests.get(f'http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
+            print(f'{doi_response.status_code}: Re-Get DOI Info -> http://api.springernature.com/meta/v2/json?q=doi:{doi}&api_key={current_key}')
+    return json.loads(doi_response.content), current_key
 
 
 def get_article_info(article, journal_name, doi_id):
@@ -241,15 +247,24 @@ def write_files(info, full_text, full_html_out, pdf_out, article_info_dir):
         info_f.write(json.dumps(info))
 
 
+def loop_api_keys(current_key, apiKeys):
+    total_index = len(apiKeys) - 1
+    current_index = apiKeys.index(current_key)
+    if current_index + 1 > total_index:
+        current_index = 0
+    return apiKeys[current_index]
+
+
 def main():
     print("---------------------------------------------------------")
     print("Loading Config...")
-    CONFIGFILE = open("../config.json", "r")
+    CONFIGFILE = open("../grdc_reports/config.json", "r")
     CONFIG = json.loads(CONFIGFILE.read())
     CONFIGFILE.close()
     print("Loaded.")
     print("---------------------------------------------------------")
-    apiKey = CONFIG['SPRINGER_NATURE_USER_KEY'][0]
+    apiKeys = CONFIG['SPRINGER_NATURE_USER_KEY']
+    current_key = apiKeys[0]
     journal_names = \
         {
             "Agronomy for Sustainable Development": "1773-0155",
@@ -266,27 +281,27 @@ def main():
     for idx, journal_name in enumerate(journals):
         issn = issns[idx]
         print(f'Processing {journal_name}, ISSN: {issn}')
-        article_info_dir = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info'
-        pdf_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/pdf'
-        full_text_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/text'
-        full_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info/full_json'
-        full_html_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/html'
-        passage_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info/passage_json'
+        article_info_dir = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info'
+        pdf_out = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/pdf'
+        full_text_out = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/text'
+        full_json_out = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info/full_json'
+        full_html_out = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/html'
+        passage_json_out = f'../../../data/journals/Springer_Nature/{"_".join(journal_name.split(" "))}/article_info/passage_json'
 
         if not os.path.exists(article_info_dir):
-            os.mkdir(article_info_dir)
+            os.makedirs(article_info_dir, exist_ok=True)
         if not os.path.exists(pdf_out):
-            os.mkdir(pdf_out)
+            os.makedirs(pdf_out, exist_ok=True)
         if not os.path.exists(full_json_out):
-            os.mkdir(full_json_out)
+            os.makedirs(full_json_out, exist_ok=True)
         if not os.path.exists(passage_json_out):
-            os.mkdir(passage_json_out)
+            os.makedirs(passage_json_out, exist_ok=True)
         if not os.path.exists(full_text_out):
-            os.mkdir(full_text_out)
+            os.makedirs(full_text_out, exist_ok=True)
         if not os.path.exists(full_html_out):
-            os.mkdir(full_html_out)
+            os.makedirs(full_html_out, exist_ok=True)
 
-        content = get_result(issn, apiKey, 1)
+        content, current_key = get_result(issn, apiKeys, 1, current_key)
         total_result = int(content['result'][0]['total'])
 
         for start in range(1, total_result, 100):
@@ -294,12 +309,12 @@ def main():
             print('---------------------------------------------------------')
             print(f'Starting Point: {start}/{total_result}')
             print('---------------------------------------------------------')
-            content = get_result(issn, apiKey, start)
+            content, current_key = get_result(issn, apiKeys, start, current_key)
             articles = content['records']
             dois = get_dois(articles)
             for doi in dois:
                 time.sleep(2)
-                article = get_doi_info(doi, apiKey)
+                article, current_key = get_doi_info(doi, apiKeys, current_key)
                 doi_id = doi.replace('.', '').replace('-', '').replace('/', '')
                 full_text = get_full_text(article['records'][0])
                 if full_text is None:

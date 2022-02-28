@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 import json
+import os
 
 random.seed(10)
 url = 'https://www.mdpi.com/search?q=&journal=agronomy&sort=pubdate&page_count=10&page_no={}'
@@ -121,8 +122,10 @@ def main():
             if ' ' in part:
                 part = part.split(' ')[0]
             ids.append(part.split('/')[-1].split('y')[1])
+        if os.path.exists('../../../data/journals/Agronomy/article_info/'):
+            os.makedirs('../../../data/journals/Agronomy/article_info/', exist_ok=True)
         for ind, did in enumerate(ids):
-            with open(f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Agronomy/article_info/agronomy-{did}.json', 'w+') as fout:
+            with open(f'../../../data/journals/Agronomy/article_info/agronomy-{did}.json', 'w+') as fout:
                 info = {
                     "pid": "-",
                     "report_id": f'agronomy-{did}',
@@ -152,7 +155,9 @@ def main():
                 print('Exception in Connection, 10 Seconds to Recover')
                 time.sleep(10)
                 pdf_file = make_request(pdf_urls[ind])
-            open(f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Agronomy/pdf/agronomy-{did}.pdf', 'wb').write(pdf_file.content)
+            if os.path.exists('../../../data/journals/Agronomy/pdf/'):
+                os.makedirs('../../../data/journals/Agronomy/pdf/', exist_ok=True)
+            open(f'../../../data/journals/Agronomy/pdf/agronomy-{did}.pdf', 'wb').write(pdf_file.content)
 
 
 def make_request(url):

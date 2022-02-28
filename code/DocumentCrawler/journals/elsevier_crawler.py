@@ -33,67 +33,73 @@ nlp.add_pipe(nlp.create_pipe("sentencizer"))
 """
 
 
-def get_entries(page_number, query, apiKey):
+def get_entries(page_number, query, apiKeys, current_key):
     try:
         response = requests.get(
-            f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
-        print(f'{response.status_code}: Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+            f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
+        print(f'{response.status_code}: Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
     except:
         print('Exception in Connection, 10 Seconds to Recover')
         time.sleep(10)
+        current_key = loop_api_keys(current_key, apiKeys)
         response = requests.get(
-            f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
-        print(f'{response.status_code}: Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+            f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
+        print(f'{response.status_code}: Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
     while response.status_code != 200:
         time.sleep(5)
+        current_key = loop_api_keys(current_key, apiKeys)
         try:
             response = requests.get(
-                f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+                f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
             print(
-                f'{response.status_code}: Re-Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+                f'{response.status_code}: Re-Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
         except:
+            current_key = loop_api_keys(current_key, apiKeys)
             print('Exception in Connection, 10 Seconds to Recover')
             time.sleep(10)
             response = requests.get(
-                f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+                f'https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
             print(
-                f'{response.status_code}: Re-Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={apiKey}')
+                f'{response.status_code}: Re-Get Entry -> https://api.elsevier.com/content/search/sciencedirect?start={page_number}&count=100&query={query}&apiKey={current_key}')
     content = json.loads(response.content)
-    return content, response.status_code
+    return content, response.status_code, current_key
 
 
-def get_info(pii, apiKey):
+def get_info(pii, apiKeys, current_key):
     headers = {
         'Accept': 'application/json',
     }
     try:
         response = requests.get(
-            f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}', headers=headers)
+            f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}', headers=headers)
         print(
-            f'{response.status_code}: Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}')
+            f'{response.status_code}: Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}')
     except:
+        current_key = loop_api_keys(current_key, apiKeys)
         print('Exception in Connection, 10 Seconds to Recover')
         time.sleep(10)
         response = requests.get(
-            f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}', headers=headers)
+            f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}', headers=headers)
         print(
-            f'{response.status_code}: Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}')
+            f'{response.status_code}: Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}')
     while response.status_code != 200:
         time.sleep(5)
+        current_key = loop_api_keys(current_key, apiKeys)
         try:
             response = requests.get(
-                f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}',
+                f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}',
                 headers=headers)
             print(
-                f'{response.status_code}: Re-Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}')
+                f'{response.status_code}: Re-Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}')
         except:
+            current_key = loop_api_keys(current_key, apiKeys)
             print('Exception in Connection, 10 Seconds to Recover')
             time.sleep(10)
             response = requests.get(
-                f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}',
+                f'https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}',
                 headers=headers)
             print(
-                f'{response.status_code}: Re-Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={apiKey}')
+                f'{response.status_code}: Re-Get Abstract -> https://api.elsevier.com/content/abstract/pii/{pii}?apiKey={current_key}')
         if response.status_code == 404:
             return None
     content = json.loads(response.content)
@@ -167,45 +173,48 @@ def get_info(pii, apiKey):
         'keywords': ','.join(keywords),
         'type': content['abstracts-retrieval-response']['coredata']['prism:aggregationType']
     }
-    return info
+    return info, current_key
 
 
-def get_full_text(pii, apiKey):
+def get_full_text(pii, apiKeys, current_key):
     headers = {
         'Accept': 'application/json',
     }
     try:
         response = requests.get(
-            f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}', headers=headers)
-        print(f'{response.status_code}: Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}')
+            f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}', headers=headers)
+        print(f'{response.status_code}: Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}')
     except:
+        current_key = loop_api_keys(current_key, apiKeys)
         print('Exception in Connection, 10 Seconds to Recover')
         time.sleep(10)
         response = requests.get(
-            f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}', headers=headers)
-        print(f'{response.status_code}: Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}')
+            f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}', headers=headers)
+        print(f'{response.status_code}: Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}')
     while response.status_code != 200:
         time.sleep(5)
+        current_key = loop_api_keys(current_key, apiKeys)
         try:
             response = requests.get(
-                f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}',
+                f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}',
                 headers=headers)
-            print(f'{response.status_code}: Re-Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}')
+            print(f'{response.status_code}: Re-Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}')
         except:
+            current_key = loop_api_keys(current_key, apiKeys)
             print('Exception in Connection, 10 Seconds to Recover')
             time.sleep(10)
             response = requests.get(
-                f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}',
+                f'https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}',
                 headers=headers)
-            print(f'{response.status_code}: Re-Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={apiKey}')
+            print(f'{response.status_code}: Re-Get Full Text -> https://api.elsevier.com/content/article/pii/{pii}?apiKey={current_key}')
     content = json.loads(response.content)
     full_text = content['full-text-retrieval-response']['originalText']
     if isinstance(full_text, dict):
         return None
-    return full_text
+    return full_text, current_key
 
 
-def get_article_info(entry, journal_name, apiKey):
+def get_article_info(entry, journal_name, apiKeys, current_key):
     authors = []
     if entry['authors'] is None:
         return None, None
@@ -215,8 +224,8 @@ def get_article_info(entry, journal_name, apiKey):
             authors.append(list(author.values())[0])
     else:
         authors.append(raw_authors)
-    additional_info = get_info(entry['pii'], apiKey)
-    full_text = get_full_text(entry['pii'], apiKey)
+    additional_info, current_key = get_info(entry['pii'], apiKeys, current_key)
+    full_text, current_key = get_full_text(entry['pii'], apiKeys, current_key)
     if full_text is None:
         return None, None
     if additional_info is None:
@@ -263,7 +272,7 @@ def get_article_info(entry, journal_name, apiKey):
             "web_url": entry['prism:url'],
             "passage": ''
         }
-    return info, full_text
+    return info, full_text, current_key
 
 
 def split_and_write_files(info, full_text, full_text_out, full_json_out, passage_json_out, article_info_dir):
@@ -297,15 +306,24 @@ def chunk(sentences, chunk_size):
         yield sentences[i:i + chunk_size]
 
 
+def loop_api_keys(current_key, apiKeys):
+    total_index = len(apiKeys) - 1
+    current_index = apiKeys.index(current_key)
+    if current_index + 1 > total_index:
+        current_index = 0
+    return apiKeys[current_index]
+
+
 def main():
     print("---------------------------------------------------------")
     print("Loading Config...")
-    CONFIGFILE = open("../config.json", "r")
+    CONFIGFILE = open("../grdc_reports/config.json", "r")
     CONFIG = json.loads(CONFIGFILE.read())
     CONFIGFILE.close()
     print("Loaded.")
     print("---------------------------------------------------------")
-    apiKey = CONFIG['ELSEVIER_API_KEY'][0]
+    apiKeys = CONFIG['ELSEVIER_API_KEY']
+    current_key = apiKeys[0]
     journal_names = \
         [
             'Advances in Agronomy', 'Agricultural Systems', 'Agricultural Water Management',
@@ -316,26 +334,26 @@ def main():
     for journal_name in journal_names:
         print(f'Processing {journal_name}')
         bq_name = '+'.join(journal_name.split(' '))
-        article_info_dir = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info'
-        full_text_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Elsevier/{"_".join(journal_name.split(" "))}/text'
-        full_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info/full_json'
-        passage_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info/passage_json'
-        pdf_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Elsevier/{"_".join(journal_name.split(" "))}/pdf'
+        article_info_dir = f'../../../data/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info'
+        full_text_out = f'../../../data/journals/Elsevier/{"_".join(journal_name.split(" "))}/text'
+        full_json_out = f'../../../data/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info/full_json'
+        passage_json_out = f'../../../data/journals/Elsevier/{"_".join(journal_name.split(" "))}/article_info/passage_json'
+        pdf_out = f'../../../data/journals/Elsevier/{"_".join(journal_name.split(" "))}/pdf'
 
         if not os.path.exists(article_info_dir):
-            os.mkdir(article_info_dir)
+            os.makedirs(article_info_dir, exist_ok=True)
         if not os.path.exists(full_text_out):
-            os.mkdir(full_text_out)
+            os.makedirs(full_text_out, exist_ok=True)
         if not os.path.exists(full_json_out):
-            os.mkdir(full_json_out)
+            os.makedirs(full_json_out, exist_ok=True)
         if not os.path.exists(passage_json_out):
-            os.mkdir(passage_json_out)
+            os.makedirs(passage_json_out, exist_ok=True)
         if not os.path.exists(pdf_out):
-            os.mkdir(pdf_out)
+            os.makedirs(pdf_out, exist_ok=True)
 
         query = 'all({})+AND+srctitle({})'.format(bq_name, bq_name)
 
-        content, status = get_entries(0, query, apiKey)
+        content, status, current_key = get_entries(0, query, apiKeys, current_key)
         print(f'{status}: Get Total Results')
 
         total_result = content['search-results']['opensearch:totalResults']
@@ -346,17 +364,17 @@ def main():
         for i in range(0, pages):
             time.sleep(5)
             print(f'Page Number: {i + 1}/{pages}')
-            content, status = get_entries(i, query, apiKey)
+            content, status, current_key = get_entries(i, query, apiKeys, current_key)
             print(f'Entry: {status}')
             while status != 200:
                 time.sleep(2)
-                content, status = get_entries(i, query, apiKey)
+                content, status, current_key = get_entries(i, query, apiKeys, current_key)
                 print(f'Re-Entry: {status}')
             entries = content['search-results']['entry']
             for entry in entries:
                 time.sleep(5)
                 print(f'PII: {entry["pii"]}')
-                info, full_text = get_article_info(entry, journal_name, apiKey)
+                info, full_text, current_key = get_article_info(entry, journal_name, apiKeys, current_key)
                 if info is None:
                     continue
                 else:

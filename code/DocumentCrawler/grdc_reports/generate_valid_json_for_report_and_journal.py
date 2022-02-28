@@ -6,7 +6,7 @@ import spacy
 nlp = spacy.blank("en")
 nlp.add_pipe(nlp.create_pipe("sentencizer"))
 
-IN_DIR = './data/all_json/document'
+IN_DIR = '../../../data/all_json/document'
 
 
 def split_document_into_passage(document, num):
@@ -27,7 +27,7 @@ def chunk(sentences, chunk_size):
 def main():
 
     line_count = 0
-    file_count = 0  
+    file_count = 0
 
     total_file = sum(1 for _ in os.listdir(IN_DIR))
     for filename in tqdm(os.listdir(IN_DIR), total=total_file):
@@ -61,12 +61,12 @@ def main():
                 }
                 if line_count < 1000000:
                     line_count += 1
-                    out = open(f'./data/all_json/passage-3-combined-24052021/passage-3-{file_count}.jsonl', 'a+')
+                    out = open(f'../../../data/all_json/passage-3-combined-24052021/passage-3-{file_count}.jsonl', 'a+')
                     out.write(f'{json.dumps(content)}\n')
                 else:
                     line_count = 1
                     file_count += 1
-                    out = open(f'./data/all_json/passage-3-combined-24052021/passage-3-{file_count}.jsonl', 'a+')
+                    out = open(f'../../../data/all_json/passage-3-combined-24052021/passage-3-{file_count}.jsonl', 'a+')
                     out.write(f'{json.dumps(content)}\n')
 
 if __name__ == '__main__':

@@ -2,7 +2,6 @@ import requests
 import json
 import time
 import spacy
-import math
 import os
 
 nlp = spacy.blank("en")
@@ -231,7 +230,7 @@ def get_article_info(journal_name, article, doi_id, link):
             given = raw_authors_and_affils['given'] if 'given' in raw_authors_and_affils.keys() else None
             family = raw_authors_and_affils['family'] if 'family' in raw_authors_and_affils.keys() else None
             if given and family:
-                    authors.append(given + family)
+                authors.append(given + family)
             if 'affiliation' in raw_authors_and_affils.keys():
                 affiliation = get_affiliations(raw_authors_and_affils['affiliation'])
                 affiliations.append(affiliation)
@@ -244,7 +243,7 @@ def get_article_info(journal_name, article, doi_id, link):
         publish_date = '-'.join(date_parts)
     else:
         publish_date = 'N/A'
-    
+
     if 'title' in article.keys():
         if article['title']:
             title = article['title'][0]
@@ -286,7 +285,7 @@ def write_files(info, full_text_stream, pdf_out, article_info_dir):
 def main():
     print("---------------------------------------------------------")
     print("Loading Config...")
-    CONFIGFILE = open("../config.json", "r")
+    CONFIGFILE = open("../grdc_reports/config.json", "r")
     CONFIG = json.loads(CONFIGFILE.read())
     CONFIGFILE.close()
     print("Loaded.")
@@ -312,22 +311,22 @@ def main():
     for idx, journal_name in enumerate(journals):
         issn = issns[idx]
         print(f'Processing {journal_name}, ISSN: {issn}')
-        article_info_dir = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info'
-        pdf_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Wiley/{"_".join(journal_name.split(" "))}/pdf'
-        full_text_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Wiley/{"_".join(journal_name.split(" "))}/text'
-        full_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info/full_json'
-        passage_json_out = f'/Users/hangli/ielab/AgAsk/code/GRDC_Reports/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info/passage_json'
+        article_info_dir = f'../../../data/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info'
+        pdf_out = f'../../../data/journals/Wiley/{"_".join(journal_name.split(" "))}/pdf'
+        full_text_out = f'../../../data/journals/Wiley/{"_".join(journal_name.split(" "))}/text'
+        full_json_out = f'../../../data/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info/full_json'
+        passage_json_out = f'../../../data/journals/Wiley/{"_".join(journal_name.split(" "))}/article_info/passage_json'
 
         if not os.path.exists(article_info_dir):
-            os.mkdir(article_info_dir)
+            os.makedirs(article_info_dir, exist_ok=True)
         if not os.path.exists(pdf_out):
-            os.mkdir(pdf_out)
+            os.makedirs(pdf_out, exist_ok=True)
         if not os.path.exists(full_json_out):
-            os.mkdir(full_json_out)
+            os.makedirs(full_json_out, exist_ok=True)
         if not os.path.exists(passage_json_out):
-            os.mkdir(passage_json_out)
+            os.makedirs(passage_json_out, exist_ok=True)
         if not os.path.exists(full_text_out):
-            os.mkdir(full_text_out)
+            os.makedirs(full_text_out, exist_ok=True)
 
         first_page = True
 
