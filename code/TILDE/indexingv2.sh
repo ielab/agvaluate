@@ -3,8 +3,8 @@
 #SBATCH --job-name=agvaluate_indexing
 #SBATCH -n 1
 #SBATCH --mem-per-cpu=15G
-#SBATCH -o logs/print_agvaluate_tilde-v2_indexing.txt
-#SBATCH -e logs/error_agvaluate_tilde-v2_indexing.txt
+#SBATCH -o ../../data/logs/print_agvaluate_tilde-v2_indexing.txt
+#SBATCH -e ../../data/logs/error_agvaluate_tilde-v2_indexing.txt
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=10
@@ -17,6 +17,6 @@ module load gnu/5.4.0
 module load mvapich2
 
 python3 indexingv2.py \
---ckpt_path_or_name ./models/tilde-v2-tuned-tilde-v2-chkpnt \
---collection_path <path_to_expanded_passage_collection> \
---output_path <expanded_index_output_dir>
+--ckpt_path_or_name ../../data/<path_to_fine_tuned_agvaluate_tilde_v2_model> \
+--collection_path ../../data/<path_to_expanded_passage_collection> \
+--output_path ../../data/<expanded_index_output_dir>

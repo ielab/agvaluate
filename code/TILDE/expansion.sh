@@ -3,8 +3,8 @@
 #SBATCH --job-name=agvaluate-expanding
 #SBATCH -n 1
 #SBATCH --mem-per-cpu=5G
-#SBATCH -o logs/print_expanding.txt
-#SBATCH -e logs/error_expanding.txt
+#SBATCH -o ../../data/logs/print_expanding.txt
+#SBATCH -e ../../data/logs/error_expanding.txt
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
@@ -17,6 +17,6 @@ module load mvapich2
 
 
 python expansion.py \
-  --corpus_path <path_to_passage_collection_tsv> \
-  --output_dir <expanded_collection_output_dir>
+  --corpus_path ../../data/<path_to_passage_collection_tsv> \
+  --output_dir ../../data/<expanded_collection_output_dir>
   

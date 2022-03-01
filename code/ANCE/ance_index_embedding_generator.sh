@@ -3,8 +3,8 @@
 #SBATCH --job-name=agvaluate-ance-indexing
 #SBATCH -n 1
 #SBATCH --mem-per-cpu=10G
-#SBATCH -o logs/print_indexing.txt
-#SBATCH -e logs/error_indexing.txt
+#SBATCH -o ../../data/logs/print_indexing.txt
+#SBATCH -e ../../data/logs/error_indexing.txt
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=10
@@ -21,6 +21,6 @@ export PYSERINI_CACHE=<path_to_cache>
 
 python ance_index_embedding_generator.py \
   --encoder castorini/ance-msmarco-passage \
-  --corpus <path_to_passage_collection_jsonl> \
-  --index <output_dir_passage_index>
+  --corpus ../../data/all_json/passage-3-combined-24052021 \
+  --index ../../data/<output_dir_agvaluate_ance_passage_index>
   
