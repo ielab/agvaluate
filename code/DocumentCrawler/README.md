@@ -131,17 +131,9 @@ Inside reports directory:
 
 ### Reports
 
-Reports stored at http://ielab-data.uqcloud.net/dataset/grdc_reports 
+Reports stored at TBC 
 
-Total 4.5 GB and divided into 9 zip files, download all of them and unzip the `reports.zip `
-
-PDF Reports stored at http://ielab-data.uqcloud.net/dataset/grdc_reports_pdf
-
-Total 4.5 GB and divided into 12 zip files, download all pieces and unzip `reports.zip.001`
-
-JSON Reports stored at http://ielab-data.uqcloud.net/dataset/grdc_reports_json
-
-Total 3.7 GB and divided into 9 zip files, Download all pieces and unzip `json.zip.001`
+JSON Reports stored at https://github.com/ielab/agvaluate/tree/main/data/grdc_reports_json
 
 6. Download journal articles
 
