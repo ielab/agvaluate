@@ -11,3 +11,14 @@ Once full-text PDFs were obtained, they were converted from PDF to JSON using Ap
 A total of 210 topics were created from 165 documents (multiple, different topics could sometimes be derived from a single document). Topics were divided into training and test sets. The 50 topics with the most relevance assessments formed the test set and the remaining 160 topics formed the training set. (Other splits can be done as desired; ours was purely done for our experiments.) Each topic contained multiple query variations, a natural language question and an expert-authored answer, thus providing a rich representation of the information need. Relevance assessment by two agricultural experts produced 3,948 question-passage judged pairs.
 
 Ag-valuate provides a rich resource with a wide variety of uses: passage or document retrieval, query variation, answer generation, scientific document extraction, and domain specific or expert search. To demonstrate the utility of Ag-valuate, we conducted experiments for two of these tasks, passage retrieval and query variation, using state-of-the-art neural rankers, reporting the effectiveness and providing the code with the collection.
+
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
