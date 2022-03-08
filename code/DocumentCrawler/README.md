@@ -21,7 +21,7 @@ random
 
 The steps are:
 
-1. Download GRDC reports from API. Code is in `./grdc_reports`.
+### 1. Download GRDC reports from API. Code is in `./grdc_reports`.
 ```
 python3 main.py -d
 ```
@@ -30,7 +30,7 @@ OR
 python3 main.py --download
 ```
 
-2. Convert PDF to JSON files
+### 2. Convert PDF to JSON files
 ```
 python3 main.py -e
 ```
@@ -87,7 +87,7 @@ Example JSON file for each report:
 
 Report 1030 contains a zipped file as one of the attachments, which contains 10 doc files inside, this is a special case and need to be handled carefully.
 
-3. Clean json file to remove uneeded content
+### 3. Clean json file to remove uneeded content
 ```
 python3 main.py -c
 ```
@@ -96,7 +96,7 @@ OR
 python3 main.py --clean
 ```
 
-4. Split content to meet the field lenght in pyserini
+### 4. Split content to meet the field lenght in pyserini
 ```
 python3 main.py -s
 ```
@@ -105,12 +105,12 @@ OR
 python3 main.py --split
 ```
 
-5. Add some extra reports that require special handling
+### 5. Add some extra reports that require special handling
 ```
 python3 add_new_reports_for_index.py
 ```
 
-### Reports directory structure
+#### Reports directory structure
 
 All reports, pdf, attachments will be downloaded automatically in reports directory.
 
@@ -125,19 +125,19 @@ Inside reports directory:
     .../json/1.json                                 ----> JSON file for each report and their attachments, file name is report ID
 ```
 
-### Config
+#### Config
 
 `Config.json` contains all the APIs provided by GRDC, for details of usage, please visit https://grdcfinalreports.cerdi.edu.au/api/docs/
 
-### Reports
+#### Reports
 
 Reports stored at TBC 
 
 JSON Reports stored at https://github.com/ielab/agvaluate/tree/main/data/grdc_reports_json
 
-6. Download journal articles
+### 6. Download journal articles
 
-### Config
+#### Config
 
 `Config.json` replace all API keys with you institutional or paid subscription. Elsevier and Springer might have multiple keys.
 
@@ -146,12 +146,12 @@ Run each crawler script, e.g.
 python3 elsevier_crawler.py
 ```
 
-7. Clean JSON files to keep ONLY the metadata that exists in both reports and journal articles
+### 7. Clean JSON files to keep ONLY the metadata that exists in both reports and journal articles
 ```
 python3 grdc_reports/generate_valid_json_for_report_and_journal.py
 ```
 
-8. Split documents into passages
+### 8. Split documents into passages
 ```
 python3 grdc_reports/split_doc_into_para.py
 ```
