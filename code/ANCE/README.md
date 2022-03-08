@@ -2,7 +2,7 @@
 
 ### Step 1 - Index the collection
 
-Generate embeddings for the entire collection using pyserini pre-trained ANCE encoder and store in FAISS index. Run the shell script `ance_index_embedding_generator.sh`. It requires GPU access.
+Generate embeddings for the entire collection using pyserini pre-trained ANCE encoder and store in FAISS index. Run the shell script `ance_index_embedding_generator.sh`. It requires access to 1 GPU and 100GB of memory.
 
 ```
 python ance_index_embedding_generator.py \
@@ -23,7 +23,7 @@ It will generate a file with the same name and in tsv format
 
 ### Setep 3 - Run the model
 
-Run the model via `ance_retrieval.sh`. It requires GPU access.
+Run the model via `ance_retrieval.sh`. It requires access to 1 GPU and 100GB of memory.
 
 ```
 python -m pyserini.dsearch \
