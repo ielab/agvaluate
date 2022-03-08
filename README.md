@@ -79,11 +79,11 @@ We implemented the following retrieval models and evaluated them on the Ag-valua
 
 <ol>
   <li><strong>BM25</strong>, Vanilla BM25 baseline to understand how a simple term-based retrieval performs.</li>
-  <li><strong>BM25-Tuned-RM3</strong>, A BM25 with params $b$ and $k1$ tuned on the training set and pseudo relevance feedback using RM3.</li>
-  <li><a href="">monoBERT Reranker</a>, BM25 followed by a monoBERT reranker pre-trained on MSMARCO and fine-tuned on the 160 training topics. (The same system used for pooling.)</li>
-  <li><a href="">TILDEv2 Tuned</a>, The same computationally efficient neural document expansion model used for pooling. </li>
-  <li><a href="">TILDEv2</a>, TILDEv2 without fine-tuning on the target domain, providing an estimate of the benefit of performing fine-tuning.</li>
-  <li><a href="">ANCE</a></li>
+  <li><strong>BM25-Tuned-RM3</strong>, A BM25 with params <em>b</em> and <em>k1</em> tuned on the training set and pseudo relevance feedback using RM3.</li>
+  <li><a href="https://github.com/ielab/agvaluate/tree/main/code/BERT">monoBERT Reranker</a>, BM25 followed by a monoBERT reranker pre-trained on MSMARCO and fine-tuned on the 160 training topics. (The same system used for pooling.)</li>
+  <li><a href="https://github.com/ielab/agvaluate/tree/main/code/TILDE">TILDEv2 Tuned</a>, The same computationally efficient neural document expansion model used for pooling. </li>
+  <li><a href="https://github.com/ielab/agvaluate/tree/main/code/TILDE">TILDEv2</a>, TILDEv2 without fine-tuning on the target domain, providing an estimate of the benefit of performing fine-tuning.</li>
+  <li><a href="https://github.com/ielab/agvaluate/tree/main/code/ANCE">ANCE</a>, is a dense retriever that selects more realistic negative training instances from an Approximate Nearest Neighbor (ANN) index of the corpus. We used a ANCE model pre-trained on the MSMARCO dataset.</li>
 </ol>
 
 To make use of the multi-faceted topics provided by Ag-valuate, we ran the above models using both the natural language questions and keyword query versions of the topic. This aimed to uncover some insights into how query variation impact effectiveness.
