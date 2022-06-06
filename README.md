@@ -13,7 +13,7 @@
 
 ## Paper
 
-This work is currently under review as a resource paper at SIGIR 2022.
+This work is currently under review as a resource paper at CIKM 2022.
 
 ```
 @inproceedings{mourad2022agvaluate,
@@ -36,7 +36,7 @@ Ag-valuate provides a rich resource with a wide variety of uses: passage or docu
 
 ## Documents and Passages
 
-The pre-processed [GRDC JSON reports](https://github.com/ielab/agvaluate/tree/main/data/grdc_reports_json) are provided freely in the repository. The raw PDF files of the GRDC reports can be downloaded from [here](https://doi.org/10.48610/fa4684b). The journal articles come from subscription journals so cannot be redistributed. However, we provide crawler scripts that can be used to download the full collection using a public API for the reports and an institutional or paid subscription to these journals. The [Document Crawler](https://github.com/ielab/agvaluate/tree/main/code/DocumentCrawler) includes details of how to run the following document crawlers:
+The pre-processed [GRDC JSON reports](https://github.com/ielab/agvaluate/tree/main/data/grdc_reports_json) are provided freely in the repository. The raw PDF files of the GRDC reports can be downloaded from [here](https://doi.org/10.48610/0160dc7). The journal articles come from subscription journals so cannot be redistributed. However, we provide crawler scripts that can be used to download the full collection using a public API for the reports and an institutional or paid subscription to these journals. The [Document Crawler](https://github.com/ielab/agvaluate/tree/main/code/DocumentCrawler) includes details of how to run the following document crawlers:
 
 <ol>
   <li><a href="https://github.com/ielab/agvaluate/tree/main/code/DocumentCrawler/grdc_reports">GRDC Reports</a></li>
