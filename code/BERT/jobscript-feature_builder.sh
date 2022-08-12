@@ -18,7 +18,7 @@ module load mvapich2
 python helpers/build_train_from_ranking_agask.py \
     --tokenizer_name nboost/pt-bert-large-msmarco \
     --qrel <local_directory>/agvaluate/data/qrels/qrel-known_item-passage.tsv \
-    --json_dir <local_directory>/agvaluate/data/feature_json/agask_query_train \
-    --query_collection <local_directory>/agvaluate/data/queries/agask_query-train_not50.csv \
+    --json_dir <local_directory>/agvaluate/data/feature_json/agask_questions_train \
+    --query_collection <local_directory>/agvaluate/data/queries/agask_questions-train_not50.csv \
     --doc_collection <local_directory>/agvaluate/data/docs/agask_docs.csv
 

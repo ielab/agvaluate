@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH --job-name=agvaluate_bert_train_kq
+#SBATCH --job-name=agvaluate_bert_train_nlq
 #SBATCH -n 1
 #SBATCH --mem-per-cpu=8G
-#SBATCH -o <local_directory>/agvaluate/data/logs/print_agvaluate_bert_train_nlq_kq.txt
-#SBATCH -e <local_directory>/agvaluate/data/logs/error_agvaluate_bert_train_nlq_kq.txt
+#SBATCH -o <local_directory>/agvaluate/data/logs/print_agvaluate_bert_train_nlq.txt
+#SBATCH -e <local_directory>/agvaluate/data/logs/error_agvaluate_bert_train_nlq.txt
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:tesla-smx2:1
 #SBATCH --cpus-per-task=1
