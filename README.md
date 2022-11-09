@@ -1,5 +1,4 @@
-# Ag-valuate
-## A Test Collection for Agricultural Information Needs
+# Ag-valuate - A Test Collection for Agricultural Information Needs
 
 ### Table of Contents
 <ol>
