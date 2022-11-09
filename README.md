@@ -3,7 +3,6 @@
 
 ### Table of Contents
 <ol>
-  <li><a href="#paper">Paper</a></li>
   <li><a href="#overview">Overview</a></li>
   <li><a href="#documents-and-passages">Documents and Passages</a></li>
   <li><a href="#questionquery-topics">Question/Query Topics</a></li>
@@ -11,18 +10,6 @@
   <li><a href="#passage-retrieval-baselines">Passage Retrieval Baselines</a></li>
 </ol>
 
-## Paper
-
-This work is currently under review as a resource paper at CIKM 2022.
-
-```
-@inproceedings{mourad2022agvaluate,
- title={Ag-valuate: A Test Collection for Agricultural Information Needs},
- author={Mourad, Ahmed and Koopman, Bevan and Li, Hang and Vegt, Anton van der and Zhuang, Shengyao and Gibon, Simon and Dang, Yash and Lawrence, David and Zuccon, Guido},
- booktitle={},
- year={2022}
-}
-```
 
 ## Overview
 
